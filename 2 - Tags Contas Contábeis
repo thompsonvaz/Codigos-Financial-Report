@@ -1,0 +1,36 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+-- Seleciona as primeiras 1000 linhas da tabela tb_conta_contabil_tag
+SELECT TOP (1000) [codigo_conta]
+      ,[id_empresa]
+      ,[desc_tag3]
+      ,[desc_inf_con]
+      ,[desc_tag2]
+      ,[desc_tag1]
+      ,[desc_info_contabeis]
+      ,[sub_total]
+      ,[ordem]
+      ,[desc_tag_projetada]
+  FROM [FinanceiroBD].[dbo].[tb_conta_contabil_tag]
+
+-- Atualiza as descrições de tag contábil para a conta e empresa especificadas
+UPDATE [FinanceiroBD].[dbo].[tb_conta_contabil_tag]
+SET
+  desc_inf_con = 'Reversão de Provisões',
+  desc_tag2 = 'Reversão de Provisões',
+  desc_tag_projetada = 'Reversão de Provisões'
+WHERE
+  codigo_conta = '4.2.05.02' AND
+  id_empresa = 4;
+
+-- Insere novas tags contábeis
+INSERT INTO tb_conta_contabil_tag (codigo_conta, id_empresa, desc_tag3, desc_inf_con, desc_tag2, desc_tag1, desc_info_contabeis, desc_tag_projetada) 
+VALUES ('4.1', 11, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'),
+       ('4.1.02', 11, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'),
+       ('4.1.02.01', 11, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'),
+       ('4.1.02.01.01', 11, 'Receitas', 'Tx.Adm e Perf. de Fundos Locais', 'Receitas Mercado Interno', '(+) RECEITA BRUTA', '(+) Receitas de Serviços', 'Tx.Adm e Perf. de Fundos Locais'),
+       ('4.1.02.01.99', 11, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'),
+       ('4.1.02.01.99.001', 11, 'Deduções da Receita Bruta', 'ISS', 'ISS S/Faturamento', '(-) Deduções da Receita Bruta', '(-) Impostos', 'ISS'),
+       ('4.1.02.01.99.002', 11, 'Deduções da Receita Bruta', 'Pis e Cofins', 'PIS S/Faturamento', '(-) Deduções da Receita Bruta', '(-) Impostos', 'Pis e Cofins'),
+       ('4.1.02.01.99.003', 11, 'Deduções da Receita Bruta', 'Pis e Cofins', 'COFINS S/Faturamento', '(-) Deduções da Receita Bruta', '(-) Impostos', 'Pis e Cofins'),
+       ('4.2.06', 11, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'),
+       ('4.2.06.03', 11, 'Receitas', 'Outras Receitas', 'Outras Receitas', '(+) RECEITA BRUTA', '(+) Demais Receitas', 'Outras Receitas');
