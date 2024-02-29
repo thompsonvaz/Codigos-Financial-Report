@@ -1,0 +1,34 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+-- Seleciona as primeiras 1000 linhas da tabela tb_conta_contabil
+SELECT TOP (1000) [codigo_conta]
+      ,[id_empresa]
+      ,[descricao]
+  FROM [FinanceiroBD].[dbo].[tb_conta_contabil]
+
+-- Exclui a conta contábil especificada para uma empresa específica
+DELETE FROM [FinanceiroBD].[dbo].[tb_conta_contabil]
+WHERE codigo_conta IN ('4.2.05.02')
+  AND id_empresa = 4
+
+-- Atualiza a descrição da conta contábil especificada para uma empresa específica
+UPDATE [FinanceiroBD].[dbo].[tb_conta_contabil]
+SET descricao = 'REVERSÃO DE PROVISÕES'
+WHERE codigo_conta = '4.2.05.02' AND id_empresa = 4;
+
+-- Atualiza a descrição da tag contábil
+UPDATE tb_conta_contabil_tag
+SET desc_info_contabeis = '(+) Receitas de Serviços'
+WHERE desc_info_contabeis = 'Resultado de Equivalência Patrimonial';
+
+-- Atualiza a descrição da tag contábil para uma conta e empresa específicas
+UPDATE tb_conta_contabil_tag
+SET desc_inf_con = 'SPX US'
+WHERE codigo_conta = '3.2.08.07.03.003' AND id_empresa = 4;
+
+-- Insere novas contas contábeis
+INSERT INTO tb_conta_contabil (codigo_conta, id_empresa, descricao ) 
+VALUES ('4.1', 11, 'RECEITAS OPERACIONAIS'),
+       ('4.1.02', 11, 'RECEITAS DE SERVIÇOS'),
+       ('4.1.02.01', 11, 'MERCADO INTERNO'),
+       ('4.1.02.01.01', 11, 'RECEITAS DE SERVIÇOS PRESTADOS'),
+       ('4.1.02.01.99', 11, 'DEDUÇÕES DE SERVIÇOS PRESTADOS');
