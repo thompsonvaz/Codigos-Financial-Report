@@ -1,0 +1,28 @@
+/****** Script para seleção das primeiras N linhas ******/
+-- Seleciona as primeiras 1000 linhas da tabela tb_lancamento_contabil
+SELECT TOP (1000) [data]
+      ,[codigo_conta]
+      ,[id_empresa]
+      ,[valor]
+  FROM [FinanceiroBD].[dbo].[tb_lancamento_contabil]
+
+-- Conta o número total de lançamentos por empresa
+SELECT id_empresa, COUNT(*) AS total_lancamentos
+FROM [FinanceiroBD].[dbo].[tb_lancamento_contabil]
+GROUP BY id_empresa;
+
+-- Conta o número total de lançamentos por empresa, exibindo a sigla da empresa
+SELECT e.sigla, e.id_empresa, COUNT(l.id_empresa) AS total_lancamentos
+FROM [FinanceiroBD].[dbo].[tb_lancamento_contabil] l
+JOIN [FinanceiroBD].[dbo].[tb_empresa] e ON l.id_empresa = e.id_empresa
+GROUP BY e.sigla, e.id_empresa;
+
+-- Exclui os lançamentos contábeis de uma empresa específica em uma data específica
+DELETE FROM [FinanceiroBD].[dbo].[tb_lancamento_contabil]
+WHERE id_empresa = 11 AND data = '2023-12-01';
+
+-- Insere novos lançamentos contábeis
+INSERT INTO tb_lancamento_contabil (data, codigo_conta, id_empresa, valor) VALUES ( '2023-1-1', '1.1.01.02.17',11, 39568.64)
+INSERT INTO tb_lancamento_contabil (data, codigo_conta, id_empresa, valor) VALUES ( '2023-1-1', '2',11, -62590.39)
+INSERT INTO tb_lancamento_contabil (data, codigo_conta, id_empresa, valor) VALUES ( '2023-1-1', '2.1',11, -62590.39)
+INSERT INTO tb_lancamento_contabil (data, codigo_conta, id_empresa, valor) VALUES ( '2023-1-1', '2.1.01',11, -13274.64)
